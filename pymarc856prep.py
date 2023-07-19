@@ -4,8 +4,8 @@ from pymarc import Record, Field
 #you will need to specify input and output file names
 #you will need to change the holdings code in the 856$9 and text in 856$z below
 
-with open('justafew.mrc', 'rb') as data:
-    with open('smallbatch926e2.mrc', 'wb') as out:
+with open('INPUTFILE.mrc', 'rb') as data:
+    with open('OUTPUTFILE.mrc', 'wb') as out:
         reader = MARCReader(data)
         for record in reader:
             # In this portion of the code, you have retrieved a specific record
