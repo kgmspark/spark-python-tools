@@ -1,8 +1,13 @@
 from pymarc import MARCReader
 from pymarc import Record, Field 
 
+#this script preps ebook files for Evergreen by removing the GMD and extraneous links, adding a holdings code 
+##and editing the text for the link
 #you will need to specify input and output file names
-#you will need to change the holdings code in the 856$9 and text in 856$z below
+#you will need to specify the holdings code for the 856$9 and link text for 856$z below
+
+shortcode = 'WYO'
+linktext = 'Click to access digital title. Please have your valid Wyomissing Public Library card handy.'
 
 with open('INPUTFILE.mrc', 'rb') as data:
     with open('OUTPUTFILE.mrc', 'wb') as out:
@@ -34,11 +39,11 @@ with open('INPUTFILE.mrc', 'rb') as data:
             fields = record.get_fields('856')
             for field in fields:
                 field.delete_subfield('z')            
-                field.add_subfield('z', 'Click to access digital title. Please have your valid Wyomissing Public Library card handy.')
+                field.add_subfield('z', linktext)
             
             #add 856$9WYO
             fields = record.get_fields('856')
             for field in fields:
-                field.add_subfield('9', 'WYO')
+                field.add_subfield('9', shortcode)
 
             out.write(record.as_marc())
