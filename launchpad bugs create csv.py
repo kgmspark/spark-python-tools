@@ -4,26 +4,28 @@ Created on Mon Jun 26 14:09:05 2023
 
 @author: direc
 """
-#you will need to list the launchpad bugs you want to report on in the 'ourbugs' variable below
+
 import csv  
-from csv import writer
+from csv import DictWriter
+from read_csv import read_csv
 
 
 from launchpadlib.launchpad import Launchpad
 
 
-ourbugs = [
-    1736565,
-    2024610,
-    1667080,
-    2024482,
-    1989368,
-    1837799,
-]
+
+field_names = ['number', 'title', 'status', 'target', 'tags']
+
+with open("bugs5.csv", "a", newline='') as f_object:
+        dictwriter_object = DictWriter(f_object, fieldnames=field_names)
+        dictwriter_object.writeheader()
+        f_object.close()
 
 launchpad = Launchpad.login_anonymously('just testing', 'production', version='devel') 
 
-for row in ourbugs :
+pailsbugs = read_csv('temp2.csv')
+
+for row in pailsbugs:
     
     bug_one = launchpad.bugs[row]
     tasks = bug_one.bug_tasks
@@ -35,12 +37,11 @@ for row in ourbugs :
         tags = (bug_one.tags)
         milestone = (milestonelink.split('/')[-1])
 
-    header = ['number', 'title', 'status', 'target', 'tags']
 
-    data = [bugid, title, status, milestone, tags]
+    dict = {'number': bugid, 'title': title, 'status': status, 'target': milestone, 'tags': tags}
 
-    with open("temp.csv", "w", newline="") as stream:
-        writer = csv.writer(stream)
-        writer.writerow(header)
-        writer.writerow(data)
-        stream.close()
+    with open("bugs5.csv", "a", newline='') as f_object:
+        dictwriter_object = DictWriter(f_object, fieldnames=field_names)
+        dictwriter_object.writerow(dict)
+        f_object.close()
+
