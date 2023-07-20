@@ -2,7 +2,7 @@
 """
 Created on Mon Jun 26 14:09:05 2023
 
-@author: kgmspark
+@author: direc
 """
 
 import csv  
@@ -20,7 +20,7 @@ pailsbugs = [
     1989368,
 ]
 
-field_names = ['number', 'title', 'status', 'target', 'tags']
+field_names = ['number', 'title', 'status', 'target', 'heat', 'tags']
 
 with open("bugs.csv", "a", newline='') as f_object:
         dictwriter_object = DictWriter(f_object, fieldnames=field_names)
@@ -35,6 +35,7 @@ for row in pailsbugs :
     tasks = bug_one.bug_tasks
     bugid = (bug_one.id)
     title = (bug_one.title)
+    heat = (bug_one.heat)
     for task in tasks:
         milestonelink = str(task.milestone)
         status = (task.status)
@@ -42,7 +43,7 @@ for row in pailsbugs :
         milestone = (milestonelink.split('/')[-1])
 
 
-    dict = {'number': bugid, 'title': title, 'status': status, 'target': milestone, 'tags': tags}
+    dict = {'number': bugid, 'title': title, 'status': status, 'target': milestone, 'heat' : heat, 'tags': tags}
 
     with open("bugs.csv", "a", newline='') as f_object:
         dictwriter_object = DictWriter(f_object, fieldnames=field_names)
