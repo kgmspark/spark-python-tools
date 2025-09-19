@@ -15,6 +15,7 @@ from launchpadlib.launchpad import Launchpad
 # The output file
 outfilename = 'ourbugs091925-out.csv'
 infilename = 'ourbugs091925.csv'
+rowname = 'ï»¿bug'
 
 
 # This is a list of all supported column names in the CSV
@@ -39,7 +40,7 @@ with open(outfilename, "w", newline='\n') as fout:
         reader = csv.DictReader(ourbugs)
         for row in reader:
             # Go get the bug from Launchpad
-            bug = launchpad.bugs[row['bug']]
+            bug = launchpad.bugs[row[rowname]]
             # Tell the user what we're up to
             print(bug.title)
             # This is an awkward way to grab only the last task
@@ -64,5 +65,6 @@ with open(outfilename, "w", newline='\n') as fout:
                 'url' : bug.web_link}
             # Write it
             dictwriter_object.writerow(thisrow)
+
 
 
