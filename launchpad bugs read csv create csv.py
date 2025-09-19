@@ -39,7 +39,7 @@ with open(outfilename, "w", newline='\n') as fout:
         reader = csv.DictReader(ourbugs)
         for row in reader:
             # Go get the bug from Launchpad
-            bug = launchpad.bugs[row['ï»¿bug']]
+            bug = launchpad.bugs[row['bug']]
             # Tell the user what we're up to
             print(bug.title)
             # This is an awkward way to grab only the last task
@@ -64,4 +64,5 @@ with open(outfilename, "w", newline='\n') as fout:
                 'url' : bug.web_link}
             # Write it
             dictwriter_object.writerow(thisrow)
+
 
